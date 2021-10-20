@@ -23,4 +23,21 @@ class DailyActivity extends Model
     {
         return $query->whereDate('created_at', $date);
     }
+
+    function scopeSearchUser(Builder $query, string $text)
+    {
+        $query->where('username', 'like', $text . '%');
+        $query->orWhere('username', 'like', '%' . $text . '%');
+        $query->orWhere('username', 'like', '%' . $text);
+        $query->orWhere('username', '=', $text);
+        return $query;
+    }
+
+    function scopeSearchHostname(Builder $query, string $text)
+    {
+        $query->where('hostname', 'like', $text . '%');
+        $query->orWhere('hostname', 'like', '%' . $text . '%');
+        $query->orWhere('hostname', 'like', '%' . $text);
+        $query->orWhere('hostname', '=', $text);
+    }
 }
